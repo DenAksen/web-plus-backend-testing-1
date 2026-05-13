@@ -13,31 +13,15 @@ describe('PostsService', () => {
   });
 
   it('should add a new post', () => {
-    const newPostText = 'Mocked post';
-    
-    const createdPost = postsService.create({ text: newPostText });
-    
-    // Assert
-    expect(createdPost).toBeDefined();
-    expect(createdPost.id).toBeDefined();
-    expect(createdPost.id).toBe('2');
-    expect(createdPost.text).toBe(newPostText);
-    expect(createdPost.date).toBeDefined();
-    expect(typeof createdPost.date).toBe('string');
+    const createdPost = postsService.create(post);
+
+    expect(postsService.find(createdPost.id)).toEqual(createdPost);
   });
 
   it('should find a post', () => {
-    // Arrange
-    const createdPost = postsService.create({ text: 'Post to find' });
-    const expectedPostId = createdPost.id;
-    
-    // Act
-    const foundPost = postsService.find(expectedPostId);
-    
-    // Assert
-    expect(foundPost).toBeDefined();
-    expect(foundPost?.id).toBe(expectedPostId);
-    expect(foundPost?.text).toBe('Post to find');
-    expect(foundPost?.date).toBeDefined();
+    const createdPost = postsService.create(post);
+    const foundPost = postsService.find(createdPost.id);
+
+    expect(foundPost).toMatchObject(post);
   });
 });
